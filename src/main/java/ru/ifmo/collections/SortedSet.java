@@ -2,13 +2,10 @@ package ru.ifmo.collections;
 
 import java.util.AbstractSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 /**
@@ -25,7 +22,7 @@ import java.util.TreeMap;
  * @param <T> set contents type
  */
 public class SortedSet<T> extends AbstractSet<T> {
-    private final Map<T, T> contents;
+    private final NavigableMap<T, Object> contents;
 
     public static <T> SortedSet<T> create() {
         return new SortedSet<>();
@@ -35,11 +32,11 @@ public class SortedSet<T> extends AbstractSet<T> {
         return new SortedSet<>(comparator);
     }
 
-    public SortedSet(Comparator<T> comparator) {
+    private SortedSet(Comparator<T> comparator) {
         contents = new TreeMap<>(comparator);
     }
 
-    public SortedSet() {
+    private SortedSet() {
         this(null);
     }
 
@@ -57,7 +54,7 @@ public class SortedSet<T> extends AbstractSet<T> {
     public boolean add(T element) {
         if (contents.containsKey(element))
             return false;
-        contents.put(element, element);
+        contents.put(element, null);
         return true;
     }
 
@@ -66,8 +63,6 @@ public class SortedSet<T> extends AbstractSet<T> {
     }
 
     public List<T> getReversed() {
-        List<T> result = getSorted();
-        Collections.reverse(result);
-        return result;
+        return new ArrayList<>(contents.descendingKeySet());
     }
 }

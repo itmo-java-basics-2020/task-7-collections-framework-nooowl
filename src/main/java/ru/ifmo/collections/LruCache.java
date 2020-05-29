@@ -17,7 +17,7 @@ import java.util.Map;
 public class LruCache<K, V> {
     private final int capacity;
     private final Map<K, V> data = new HashMap<>();
-    final LinkedList<K> usedQueue = new LinkedList<>();
+    private final LinkedList<K> usedQueue = new LinkedList<>();
 
     public LruCache(int capacity) {
         this.capacity = capacity;
